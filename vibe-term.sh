@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # ═══════════════════════════════════════════════════════════════
-#  🚀 Vibe Terminal - 바이브 코딩용 8-pane 터미널 매니저
+#  🚀 Vibe Terminal - 바이브 코딩용 9-pane 터미널 매니저
 #
 #  Usage: ./vibe-term.sh [panes] [session-name]
-#    panes        Number of panes (default: 8)
+#    panes        Number of panes (default: 9)
 #    session-name Session name (default: vibe)
 #
 #  Keybindings (prefix: Ctrl+a):
-#    1-8    → Jump to pane
+#    1-9    → Jump to pane
 #    x      → Close current pane
 #    n      → New pane
 #    f      → Fullscreen toggle
@@ -19,7 +19,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONF="${SCRIPT_DIR}/vibe-term.conf"
-PANES="${1:-8}"
+PANES="${1:-9}"
 SESSION="${2:-vibe}"
 
 # ── Preflight ──────────────────────────────────────────────
@@ -69,6 +69,26 @@ for ((i = 1; i <= PANES; i++)); do
     tmux send-keys -t "$SESSION:.${i}" "echo '🎨 Vibe Terminal pane ${i}/${PANES} — prefix: Ctrl+a'" Enter
 done
 
+# ── Auto-launch system monitor in last pane (9+ panes) ──
+if [[ "$PANES" -ge 9 ]]; then
+    MONITOR_PANE="$PANES"
+    MONITOR_CMD=""
+
+    if command -v btop &>/dev/null; then
+        MONITOR_CMD="btop"
+    elif command -v htop &>/dev/null; then
+        MONITOR_CMD="htop"
+    elif [[ -x "${SCRIPT_DIR}/vibe-monitor.sh" ]]; then
+        MONITOR_CMD="${SCRIPT_DIR}/vibe-monitor.sh"
+    elif [[ "$(uname)" == "Darwin" ]]; then
+        MONITOR_CMD="top -o cpu"
+    else
+        MONITOR_CMD="top"
+    fi
+
+    tmux send-keys -t "$SESSION:.${MONITOR_PANE}" "$MONITOR_CMD" Enter
+fi
+
 # ── Attach ────────────────────────────────────────────────
 echo ""
 echo "  ╔══════════════════════════════════════╗"
@@ -77,7 +97,7 @@ echo "  ║                                      ║"
 echo "  ║  Panes: ${PANES}                           ║"
 echo "  ║  Prefix: Ctrl+a                      ║"
 echo "  ║                                      ║"
-echo "  ║  1-8: jump  x: close  n: new         ║"
+echo "  ║  1-9: jump  x: close  n: new         ║"
 echo "  ║  f: zoom    q: quit   ←↑↓→: move     ║"
 echo "  ╚══════════════════════════════════════╝"
 echo ""

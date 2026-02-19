@@ -12,16 +12,17 @@
 </p>
 
 <p align="center">
-  One command. 8 panes. Pure vibe.
+  One command. 9 panes. Pure vibe.
 </p>
 
 ---
 
 ## What is this?
 
-Vibe Terminal instantly launches a **4x2 grid of terminal panes** using tmux — perfect for vibe coding sessions where you need multiple terminals at a glance.
+Vibe Terminal instantly launches a **3x3 grid of terminal panes** using tmux — perfect for vibe coding sessions where you need multiple terminals at a glance.
 
 - Server, client, logs, tests, git, db, docs, scratch — all visible at once
+- Built-in system monitor (CPU/memory) in the last pane
 - Jump between panes with number keys
 - Cyberpunk-inspired color theme (Tokyo Night palette)
 - Zero config needed, just run it
@@ -29,14 +30,17 @@ Vibe Terminal instantly launches a **4x2 grid of terminal panes** using tmux —
 ## Demo
 
 ```
-┌──────────────┬──────────────┬──────────────┬──────────────┐
-│   1: server  │   2: client  │   3: tests   │   4: logs    │
-│              │              │              │              │
-├──────────────┼──────────────┼──────────────┼──────────────┤
-│   5: git     │   6: db      │   7: docs    │   8: scratch │
-│              │              │              │              │
-└──────────────┴──────────────┴──────────────┴──────────────┘
-                    ⚡ VIBE ⚡  8 panes  23:00
+┌──────────┬──────────┬──────────┐
+│ 1:server │ 2:client │ 3:tests  │
+│          │          │          │
+├──────────┼──────────┼──────────┤
+│ 4:logs   │ 5:git    │ 6:db     │
+│          │          │          │
+├──────────┼──────────┼──────────┤
+│ 7:docs   │ 8:scratch│ 9:monitor│
+│          │          │  (htop)  │
+└──────────┴──────────┴──────────┘
+      ⚡ VIBE ⚡  9 panes  23:00
 ```
 
 ## Requirements
@@ -57,7 +61,7 @@ Add to your `~/.zshrc` or `~/.bashrc`:
 
 ```bash
 # Vibe Terminal
-alias vt='~/vibe-term/vibe-term.sh'       # 8 panes (default)
+alias vt='~/vibe-term/vibe-term.sh'       # 9 panes (default)
 alias vt4='~/vibe-term/vibe-term.sh 4'    # 4 panes
 alias vt6='~/vibe-term/vibe-term.sh 6'    # 6 panes
 ```
@@ -67,7 +71,7 @@ Then reload: `source ~/.zshrc`
 ## Usage
 
 ```bash
-# Default: 8 panes
+# Default: 9 panes (with system monitor)
 vt
 
 # Custom pane count (1-16)
@@ -85,7 +89,7 @@ All keybindings use **`Ctrl+a`** as the prefix key.
 
 | Key | Action |
 |-----|--------|
-| `Ctrl+a` then `1`-`8` | Jump to pane by number |
+| `Ctrl+a` then `1`-`9` | Jump to pane by number |
 | `Ctrl+a` then `x` | Close current pane |
 | `Ctrl+a` then `n` | Add new pane (auto re-tiles) |
 | `Ctrl+a` then `f` | Toggle fullscreen (zoom) |
@@ -105,12 +109,26 @@ Cyberpunk-inspired **Tokyo Night** color palette:
 - Status bar with pane count and clock
 - Pane numbers displayed in border headers
 
+## System Monitor
+
+The 9th pane automatically launches a system monitor. Vibe Terminal picks the best available tool:
+
+| Priority | Tool | Notes |
+|----------|------|-------|
+| 1 | `btop` | Best visuals, install with `brew install btop` |
+| 2 | `htop` | Classic, install with `brew install htop` |
+| 3 | `vibe-monitor.sh` | Built-in custom monitor with Tokyo Night colors |
+| 4 | `top` | Always available (macOS/Linux built-in) |
+
+> **Tip:** Install `btop` for the best experience: `brew install btop`
+
 ## Files
 
 ```
 ~/vibe-term/
-├── vibe-term.sh    # Main launcher script
-├── vibe-term.conf  # tmux theme + keybindings config
+├── vibe-term.sh      # Main launcher script
+├── vibe-term.conf    # tmux theme + keybindings config
+├── vibe-monitor.sh   # Custom system monitor (fallback)
 └── README.md
 ```
 
