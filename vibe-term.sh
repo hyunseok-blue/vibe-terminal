@@ -51,19 +51,19 @@ tmux source-file "$CONF"
 if [[ "$PANES" -eq 9 ]]; then
     # Manual 3x3 equal grid: exact 33%/33%/33% columns and rows
     # Step 1: Create 3 columns (left 33% | middle 33% | right 33%)
-    tmux split-window -h -p 67 -t "$SESSION:1.1"
-    tmux split-window -h -p 50 -t "$SESSION:1.2"
+    tmux split-window -h -p 67 -t "$SESSION:.1"
+    tmux split-window -h -p 50 -t "$SESSION:.2"
 
     # Step 2: Split each column into 3 rows
     # Left column
-    tmux split-window -v -p 67 -t "$SESSION:1.1"
-    tmux split-window -v -p 50 -t "$SESSION:1.4"
+    tmux split-window -v -p 67 -t "$SESSION:.1"
+    tmux split-window -v -p 50 -t "$SESSION:.4"
     # Middle column
-    tmux split-window -v -p 67 -t "$SESSION:1.2"
-    tmux split-window -v -p 50 -t "$SESSION:1.6"
+    tmux split-window -v -p 67 -t "$SESSION:.2"
+    tmux split-window -v -p 50 -t "$SESSION:.6"
     # Right column
-    tmux split-window -v -p 67 -t "$SESSION:1.3"
-    tmux split-window -v -p 50 -t "$SESSION:1.8"
+    tmux split-window -v -p 67 -t "$SESSION:.3"
+    tmux split-window -v -p 50 -t "$SESSION:.8"
 else
     # Non-9 pane counts: use tiled layout
     for ((i = 2; i <= PANES; i++)); do
