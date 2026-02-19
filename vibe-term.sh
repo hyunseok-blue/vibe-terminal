@@ -11,6 +11,7 @@
 #    x      → Close current pane
 #    n      → New pane
 #    f      → Fullscreen toggle
+#    e      → Equalize pane sizes
 #    Arrows → Navigate panes
 #    q      → Quit all
 # ═══════════════════════════════════════════════════════════════
@@ -49,21 +50,23 @@ tmux source-file "$CONF"
 
 # ── Create panes (first pane already exists) ───────────────
 if [[ "$PANES" -eq 9 ]]; then
-    # Manual 3x3 equal grid: exact 33%/33%/33% columns and rows
+    # Manual 3x3 equal grid using stable pane IDs (avoids pane-base-index issues)
     # Step 1: Create 3 columns (left 33% | middle 33% | right 33%)
-    tmux split-window -h -p 67 -t "$SESSION:.1"
-    tmux split-window -h -p 50 -t "$SESSION:.2"
+    COL1=$(tmux display-message -t "$SESSION" -p '#{pane_id}')
+    tmux split-window -h -p 67 -t "$COL1"
+    COL2=$(tmux display-message -t "$SESSION" -p '#{pane_id}')
+    tmux split-window -h -p 50 -t "$COL2"
+    COL3=$(tmux display-message -t "$SESSION" -p '#{pane_id}')
 
-    # Step 2: Split each column into 3 rows
-    # Left column
-    tmux split-window -v -p 67 -t "$SESSION:.1"
-    tmux split-window -v -p 50 -t "$SESSION:.4"
-    # Middle column
-    tmux split-window -v -p 67 -t "$SESSION:.2"
-    tmux split-window -v -p 50 -t "$SESSION:.6"
-    # Right column
-    tmux split-window -v -p 67 -t "$SESSION:.3"
-    tmux split-window -v -p 50 -t "$SESSION:.8"
+    # Step 2: Split each column into 3 rows (33% | 33% | 33%)
+    for col in "$COL1" "$COL2" "$COL3"; do
+        tmux split-window -v -p 67 -t "$col"
+        bottom=$(tmux display-message -t "$SESSION" -p '#{pane_id}')
+        tmux split-window -v -p 50 -t "$bottom"
+    done
+
+    # Equalize all panes to uniform 3x3 grid
+    tmux select-layout -t "$SESSION" tiled
 else
     # Non-9 pane counts: use tiled layout
     for ((i = 2; i <= PANES; i++)); do
@@ -115,7 +118,8 @@ echo "  ║  Panes: ${PANES}                           ║"
 echo "  ║  Prefix: Ctrl+a                      ║"
 echo "  ║                                      ║"
 echo "  ║  1-9: jump  x: close  n: new         ║"
-echo "  ║  f: zoom    q: quit   ←↑↓→: move     ║"
+echo "  ║  f: zoom    e: equal  q: quit        ║"
+echo "  ║  ←↑↓→: move  Shift+←↑↓→: resize     ║"
 echo "  ╚══════════════════════════════════════╝"
 echo ""
 

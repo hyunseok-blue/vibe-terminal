@@ -96,6 +96,7 @@ All keybindings use **`Ctrl+a`** as the prefix key.
 | `Ctrl+a` then `x` | Close current pane |
 | `Ctrl+a` then `n` | Add new pane (auto re-tiles) |
 | `Ctrl+a` then `f` | Toggle fullscreen (zoom) |
+| `Ctrl+a` then `e` | Equalize all pane sizes |
 | `Ctrl+a` then `←↑↓→` | Navigate to adjacent pane |
 | `Ctrl+a` then `Shift+←↑↓→` | Resize pane (repeatable) |
 | `Ctrl+a` then `q` | Quit entire session |
