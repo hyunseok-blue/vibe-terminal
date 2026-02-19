@@ -19,12 +19,15 @@
 
 ## What is this?
 
-Vibe Terminal instantly launches a **3x3 grid of terminal panes** using tmux — perfect for vibe coding sessions where you need multiple terminals at a glance.
+Vibe Terminal instantly launches a **pixel-perfect 3x3 equal grid** of terminal panes using tmux — perfect for vibe coding sessions where you need multiple terminals at a glance. Each pane is exactly 33% width and 33% height, and you can resize any pane by dragging its border with the mouse.
 
 - Server, client, logs, tests, git, db, docs, scratch — all visible at once
 - Built-in system monitor (CPU/memory) in the last pane
 - Jump between panes with number keys
 - Cyberpunk-inspired color theme (Tokyo Night palette)
+- Pixel-perfect 3x3 equal grid (no uneven tiling)
+- Mouse drag to resize any pane border
+- Keyboard resize with Shift+Arrow keys
 - Zero config needed, just run it
 
 ## Demo
@@ -94,10 +97,14 @@ All keybindings use **`Ctrl+a`** as the prefix key.
 | `Ctrl+a` then `n` | Add new pane (auto re-tiles) |
 | `Ctrl+a` then `f` | Toggle fullscreen (zoom) |
 | `Ctrl+a` then `←↑↓→` | Navigate to adjacent pane |
+| `Ctrl+a` then `Shift+←↑↓→` | Resize pane (repeatable) |
 | `Ctrl+a` then `q` | Quit entire session |
 | Mouse click | Switch to clicked pane |
+| Mouse drag border | Resize pane freely |
 
 > **Tip:** Press `Ctrl+a` first, release, then press the action key.
+>
+> **Resize:** Shift+Arrow keys are repeatable — hold prefix once, then tap Shift+Arrow multiple times.
 
 ## Theme
 
