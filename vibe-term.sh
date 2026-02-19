@@ -13,6 +13,7 @@
 #    f      → Fullscreen toggle
 #    e      → Equalize pane sizes
 #    Arrows → Navigate panes
+#    HJKL   → Resize panes (repeatable)
 #    q      → Quit all
 # ═══════════════════════════════════════════════════════════════
 
@@ -119,7 +120,7 @@ echo "  ║  Prefix: Ctrl+a                      ║"
 echo "  ║                                      ║"
 echo "  ║  1-9: jump  x: close  n: new         ║"
 echo "  ║  f: zoom    e: equal  q: quit        ║"
-echo "  ║  ←↑↓→: move  Shift+←↑↓→: resize     ║"
+echo "  ║  ←↑↓→: move  HJKL: resize            ║"
 echo "  ╚══════════════════════════════════════╝"
 echo ""
 

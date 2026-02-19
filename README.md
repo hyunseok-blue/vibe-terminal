@@ -98,14 +98,14 @@ All keybindings use **`Ctrl+a`** as the prefix key.
 | `Ctrl+a` then `f` | Toggle fullscreen (zoom) |
 | `Ctrl+a` then `e` | Equalize all pane sizes |
 | `Ctrl+a` then `←↑↓→` | Navigate to adjacent pane |
-| `Ctrl+a` then `Shift+←↑↓→` | Resize pane (repeatable) |
+| `Ctrl+a` then `H/J/K/L` | Resize pane (repeatable, vim-style) |
 | `Ctrl+a` then `q` | Quit entire session |
 | Mouse click | Switch to clicked pane |
 | Mouse drag border | Resize pane freely |
 
 > **Tip:** Press `Ctrl+a` first, release, then press the action key.
 >
-> **Resize:** Shift+Arrow keys are repeatable — hold prefix once, then tap Shift+Arrow multiple times.
+> **Resize:** H/J/K/L are repeatable — press prefix once, then tap H/J/K/L multiple times. (H=left, J=down, K=up, L=right)
 
 ## Theme
 
